@@ -1,80 +1,93 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://iot-sprinkler.herokuapp.com/
 
-# sprinkler
+# iot-sprinkler
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Sprinkler API which waters gardens
 
-## Questions Collection [/questions]
+## Sprinkler [/webapi/houses/{house_id}]
 
-### List All Questions [GET]
+### Start Sprinkler [POST /webapi/houses/{house_id}/activate?time={time}]
+
+This is for Sprinkler Scheduler to notify sprinkler. Then sprinkler will check the sensors
+and decide whether to start. If sprinkler is already on, time will be reset
+
+`house_id`   ID of the house in which the sprinkler is placed
+
+`time`  Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
+
++ Parameters
+    + house_id (string) - ID of the house in which the sprinkler is placed
+    + time (number) - Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
+    
 
 + Response 200 (application/json)
+    
+        {
+            "house_id": "1"
+            "status": "on"
+            "seconds_left": 60
+        }
 
++ Response 403 (application/json)
+
+        {
+            "reason": "who cares, this damn thing doesn't work :D"
+        }
+        
+### Stop Sprinkler [POST /webapi/houses/{house_id}/deactivate]
+
+Turns sprinkler off. If sprinkler is already off, nothing will happen.
+
+`house_id`   ID of the house in which the sprinkler is placed.
+
++ Parameters
+    + house_id (string) - ID of the house in which the sprinkler is placed
+    
++ Response 200 (application/json)
+    
+        {
+            "house_id": "1"
+            "status": "off"
+            "seconds_left": 0
+        }
+
++ Response 403 (application/json)
+
+        {
+            "reason": "who cares, this damn thing doesn't work :D"
+        }
+
+### Get Sprinkler Log [GET /webapi/house/{house_id}/log?from={from}&to={to}]
+
+Read sprinkler log to see why each decision was made.
+
+`house_id`   ID of the house in which the sprinkler is placed
+
+`from` - `to` Time interval from which the log entries will be fetched. If any of these parameters isn't given, it will be ignored. 
+If these parameters are equal, both of them will be ignored and every entry will be fetched.
+
++ Parameters
+    + house_id (string) - ID of the house in which the sprinkler is placed
+    + from (Timestamp) - Log entries, that were written earlier than this date, won't be fetched. This term will be ignored if not given.
+    + to (Timestamp) - Log entries, that were written later than this date, won't be fetched. This term will be ignored if not given.
+    
+
++ Response 200 (application/json)
+    
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "time": 1
+                "entry": "something"
+            },
+            {
+                "time": 2
+                "entry": "something"
             }
         ]
 
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
++ Response 403 (application/json)
+    
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "reason": "whatever"
         }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
