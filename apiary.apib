@@ -57,37 +57,3 @@ Turns sprinkler off. If sprinkler is already off, nothing will happen.
         {
             "reason": "who cares, this damn thing doesn't work :D"
         }
-
-### Get Sprinkler Log [GET /webapi/house/{house_id}/log?from={from}&to={to}]
-
-Read sprinkler log to see why each decision was made.
-
-`house_id`   ID of the house in which the sprinkler is placed
-
-`from` - `to` Time interval from which the log entries will be fetched. If any of these parameters isn't given, it will be ignored. 
-If these parameters are equal, both of them will be ignored and every entry will be fetched.
-
-+ Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
-    + from (Timestamp) - Log entries, that were written earlier than this date, won't be fetched. This term will be ignored if not given.
-    + to (Timestamp) - Log entries, that were written later than this date, won't be fetched. This term will be ignored if not given.
-    
-
-+ Response 200 (application/json)
-    
-        [
-            {
-                "time": 1
-                "entry": "something"
-            },
-            {
-                "time": 2
-                "entry": "something"
-            }
-        ]
-
-+ Response 403 (application/json)
-    
-        {
-            "reason": "whatever"
-        }
