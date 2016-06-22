@@ -7,26 +7,28 @@ Sprinkler API which waters gardens
 
 ## Sprinkler [/webapi/houses/{house_id}]
 
-### Start Sprinkler [PUT /webapi/houses/{house_id}/task1?time={time}]
+### Get Sprinkler Status [GET /webapi/houses/{house_id}/task]
 
-This is for Sprinkler Scheduler to notify sprinkler. Then sprinkler will check the sensors
-and decide whether to start. If sprinkler is already on, time will be reset
+Returns current status of the sprinkler.
 
 `house_id`   ID of the house in which the sprinkler is placed
 
-`time`  Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
-
 + Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
-    + time (number) - Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
-    
+    + house_id (string) - ID of the house in which the sprinkler is placed.
 
 + Response 200 (application/json)
     
         {
             "house_id": "1"
             "status": "on"
-            "seconds_left": 60
+            "duration": 60
+        }
+        
++ Response 200 (application/json)
+    
+        {
+            "house_id": "1"
+            "status": "off"
         }
 
 + Response 403 (application/json)
@@ -34,22 +36,61 @@ and decide whether to start. If sprinkler is already on, time will be reset
         {
             "reason": "who cares, this damn thing doesn't work :D"
         }
-        
-### Stop Sprinkler [PUT /webapi/houses/{house_id}/task2]
 
-Turns sprinkler off. If sprinkler is already off, nothing will happen.
+### Change Sprinkler Status [PUT /webapi/houses/{house_id}/task]
 
-`house_id`   ID of the house in which the sprinkler is placed.
+Turns sprinkler on or off depending on the request body.
+
+If duration is given in the request body, sprinkler will be on for the specified time, otherwise
+default value of 60 seconds will be used.
+
+`house_id`   ID of the house in which the sprinkler is placed
+
 
 + Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
+    + house_id (string) - ID of the house in which the sprinkler is placed.
     
+
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "on",
+            "duration": 50
+        }
+        
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "on"
+        }
+        
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "off"
+        }
+
 + Response 200 (application/json)
     
         {
-            "house_id": "1"
+            "status": "on"
+            "seconds_left": 50
+        }    
+
++ Response 200 (application/json)
+    
+        {
+            "status": "on"
+            "seconds_left": 60
+        }
+        
++ Response 200 (application/json)
+    
+        {
             "status": "off"
-            "seconds_left": 0
         }
 
 + Response 403 (application/json)
