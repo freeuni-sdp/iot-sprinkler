@@ -44,6 +44,9 @@ If duration is given in the request body, sprinkler will be on for the specified
 default value of 60 seconds will be used. Also, if passed duration value is greater than 60 seconds, default
 value of 60 seconds will be used.
 
+In case sprinkler is already on and a new request tries to turn it on again, only duration will change and 
+become equal to the duration specified in the latest "on" request.
+
 `house_id`   ID of the house in which the sprinkler is placed
 
 
