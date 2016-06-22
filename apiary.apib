@@ -3,7 +3,7 @@ HOST: https://iot-sprinkler.herokuapp.com/
 
 # iot-sprinkler
 
-Sprinkler API which waters gardens
+Sprinkler API for watering gardens.
 
 ## Sprinkler [/webapi/houses/{house_id}]
 
@@ -19,7 +19,6 @@ Returns current status of the sprinkler.
 + Response 200 (application/json)
     
         {
-            "house_id": "1"
             "status": "on"
             "duration": 60
         }
@@ -37,12 +36,13 @@ Returns current status of the sprinkler.
             "reason": "who cares, this damn thing doesn't work :D"
         }
 
-### Change Sprinkler Status [PUT /webapi/houses/{house_id}/task]
+### Set Sprinkler Status [PUT /webapi/houses/{house_id}/task]
 
 Turns sprinkler on or off depending on the request body.
 
 If duration is given in the request body, sprinkler will be on for the specified time, otherwise
-default value of 60 seconds will be used.
+default value of 60 seconds will be used. Also, if passed duration value is greater than 60 seconds, default
+value of 60 seconds will be used.
 
 `house_id`   ID of the house in which the sprinkler is placed
 
@@ -77,14 +77,14 @@ default value of 60 seconds will be used.
     
         {
             "status": "on"
-            "seconds_left": 50
+            "duration": 50
         }    
 
 + Response 200 (application/json)
     
         {
             "status": "on"
-            "seconds_left": 60
+            "duration": 60
         }
         
 + Response 200 (application/json)
