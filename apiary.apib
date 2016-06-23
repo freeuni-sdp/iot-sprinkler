@@ -7,35 +7,6 @@ Sprinkler API for watering gardens.
 
 ## Sprinkler [/webapi/houses/{house_id}]
 
-### Get Sprinkler Status [GET /webapi/houses/{house_id}/task]
-
-Returns current status of the sprinkler.
-
-`house_id`   ID of the house in which the sprinkler is placed
-
-+ Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed.
-
-+ Response 200 (application/json)
-    
-        {
-            "status": "on"
-            "duration": 60
-        }
-        
-+ Response 200 (application/json)
-    
-        {
-            "house_id": "1"
-            "status": "off"
-        }
-
-+ Response 403 (application/json)
-
-        {
-            "reason": "who cares, this damn thing doesn't work :D"
-        }
-
 ### Set Sprinkler Status [PUT /webapi/houses/{house_id}/task]
 
 Turns sprinkler on or off depending on the request body.
