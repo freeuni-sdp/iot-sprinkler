@@ -3,53 +3,31 @@ HOST: https://iot-sprinkler.herokuapp.com/
 
 # iot-sprinkler
 
-Sprinkler API which waters gardens
+Sprinkler API for watering gardens.
 
 ## Sprinkler [/webapi/houses/{house_id}]
 
-### Start Sprinkler [POST /webapi/houses/{house_id}/activate?time={time}]
+### Get Sprinkler Status [GET /webapi/houses/{house_id}/task]
 
-This is for Sprinkler Scheduler to notify sprinkler. Then sprinkler will check the sensors
-and decide whether to start. If sprinkler is already on, time will be reset
+Returns current status of the sprinkler.
 
 `house_id`   ID of the house in which the sprinkler is placed
 
-`time`  Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
-
 + Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
-    + time (number) - Period of time in seconds for which the sprinkler should be on. If not specified, 60 seconds will be set.
-    
+    + house_id (string) - ID of the house in which the sprinkler is placed.
 
 + Response 200 (application/json)
     
         {
-            "house_id": "1"
             "status": "on"
-            "seconds_left": 60
-        }
-
-+ Response 403 (application/json)
-
-        {
-            "reason": "who cares, this damn thing doesn't work :D"
+            "duration": 60
         }
         
-### Stop Sprinkler [POST /webapi/houses/{house_id}/deactivate]
-
-Turns sprinkler off. If sprinkler is already off, nothing will happen.
-
-`house_id`   ID of the house in which the sprinkler is placed.
-
-+ Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
-    
 + Response 200 (application/json)
     
         {
             "house_id": "1"
             "status": "off"
-            "seconds_left": 0
         }
 
 + Response 403 (application/json)
@@ -58,36 +36,68 @@ Turns sprinkler off. If sprinkler is already off, nothing will happen.
             "reason": "who cares, this damn thing doesn't work :D"
         }
 
-### Get Sprinkler Log [GET /webapi/house/{house_id}/log?from={from}&to={to}]
+### Set Sprinkler Status [PUT /webapi/houses/{house_id}/task]
 
-Read sprinkler log to see why each decision was made.
+Turns sprinkler on or off depending on the request body.
+
+If duration is given in the request body, sprinkler will be on for the specified time, otherwise
+default value of 60 seconds will be used. Also, if passed duration value is greater than 60 seconds, default
+value of 60 seconds will be used.
+
+In case sprinkler is already on and a new request tries to turn it on again, only duration will change and 
+become equal to the duration specified in the latest "on" request.
 
 `house_id`   ID of the house in which the sprinkler is placed
 
-`from` - `to` Time interval from which the log entries will be fetched. If any of these parameters isn't given, it will be ignored. 
-If these parameters are equal, both of them will be ignored and every entry will be fetched.
 
 + Parameters
-    + house_id (string) - ID of the house in which the sprinkler is placed
-    + from (Timestamp) - Log entries, that were written earlier than this date, won't be fetched. This term will be ignored if not given.
-    + to (Timestamp) - Log entries, that were written later than this date, won't be fetched. This term will be ignored if not given.
+    + house_id (string) - ID of the house in which the sprinkler is placed.
     
+
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "on",
+            "duration": 50
+        }
+        
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "on"
+        }
+        
++ Request (application/json)
+
+        {
+            "house_id": "1"
+            "set_status": "off"
+        }
 
 + Response 200 (application/json)
     
-        [
-            {
-                "time": 1
-                "entry": "something"
-            },
-            {
-                "time": 2
-                "entry": "something"
-            }
-        ]
+        {
+            "status": "on"
+            "duration": 50
+        }    
 
-+ Response 403 (application/json)
++ Response 200 (application/json)
     
         {
-            "reason": "whatever"
+            "status": "on"
+            "duration": 60
+        }
+        
++ Response 200 (application/json)
+    
+        {
+            "status": "off"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "reason": "who cares, this damn thing doesn't work :D"
         }
