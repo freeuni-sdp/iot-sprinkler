@@ -28,7 +28,7 @@ become equal to the duration specified in the latest "on" request.
 + Request (application/json)
 
         {
-            "house_id": "1"
+            "house_id": "1",
             "set_status": "on",
             "duration": 50
         }
@@ -36,28 +36,28 @@ become equal to the duration specified in the latest "on" request.
 + Request (application/json)
 
         {
-            "house_id": "1"
+            "house_id": "1",
             "set_status": "on"
         }
         
 + Request (application/json)
 
         {
-            "house_id": "1"
+            "house_id": "1",
             "set_status": "off"
         }
 
 + Response 200 (application/json)
     
         {
-            "status": "on"
+            "status": "on",
             "duration": 50
         }    
 
 + Response 200 (application/json)
     
         {
-            "status": "on"
+            "status": "on",
             "duration": 60
         }
         
