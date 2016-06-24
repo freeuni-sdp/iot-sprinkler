@@ -29,7 +29,10 @@ public class TaskService {
     @Path("{house_id}/task")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public TaskResponse newTask(@PathParam("house_id") String houseId){
-        return new TaskResponse(houseId, "off", 60);
+    public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req){
+        System.out.println(req.duration);
+        System.out.println(req.houseId);
+        System.out.println(req.status);
+        return new TaskResponse("off", null);
     }
 }
