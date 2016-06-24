@@ -31,6 +31,7 @@ public class TaskService {
     @Produces(MediaType.APPLICATION_JSON)
     public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req){
         System.out.println(getHumidityService().isSoilMoist("1"));
+        System.out.println(getWeatherService().isRainLikely());
         return new TaskResponse("off", null);
     }
 }

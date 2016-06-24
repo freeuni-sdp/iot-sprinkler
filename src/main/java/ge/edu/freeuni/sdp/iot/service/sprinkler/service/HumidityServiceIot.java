@@ -50,7 +50,7 @@ public class HumidityServiceIot implements HumidityService {
             for (HumidityServiceObj curr : ls)
                 avg += curr.value;
             avg = avg / ls.size();
-            return avg < MINIMUM_MOIST;
+            return avg >= MINIMUM_MOIST;
 
         } catch (Exception e) {
             e.printStackTrace();
