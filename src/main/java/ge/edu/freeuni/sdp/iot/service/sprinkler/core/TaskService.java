@@ -1,11 +1,10 @@
 package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
 
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.CameraRecognizer;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.HumidityService;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.WeatherService;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.service.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import org.json.JSONObject;
 
 /**
  * Created by misho on 6/22/16.
