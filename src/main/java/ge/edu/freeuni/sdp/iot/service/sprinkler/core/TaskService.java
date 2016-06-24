@@ -30,8 +30,27 @@ public class TaskService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req){
-        System.out.println(getHumidityService().isSoilMoist("1"));
-        System.out.println(getWeatherService().isRainLikely());
-        return new TaskResponse("off", null);
+        SprinklerSwitch sw = new SprinklerSwitchIot();
+        JSONObject current = sw.getSprinklerStatus(houseId);
+        if (req.status.compareTo("off") == 0) {
+            req.duration = 0;
+            if(sw.setSprinklerStatus(houseId, false, req.duration)) {
+                return new TaskResponse("off", null);
+            }
+            else {
+                return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
+            }
+        }
+        if (req.duration > 60) {
+            req.duration = 60;
+        }
+        if(getWeatherService().isRainLikely() || getCameraRecognizer().isUnknownObjectPresent(houseId)
+                || getHumidityService().isSoilMoist(houseId)) {
+            return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
+        }
+        if(sw.setSprinklerStatus(houseId, true, req.duration)) {
+            return new TaskResponse("on", req.duration);
+        }
+        return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
     }
 }
