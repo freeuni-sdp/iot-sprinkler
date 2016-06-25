@@ -45,7 +45,11 @@ public class TaskService {
                 return new TaskResponse("off", null);
             }
             else {
-                return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
+                String status = current.getString("status");
+                int left = 0;
+                if (current.has("seconds_left"))
+                    left = current.getInt("seconds_left");
+                return new TaskResponse(status, left);
             }
         }
         if (req.duration > 60) {
