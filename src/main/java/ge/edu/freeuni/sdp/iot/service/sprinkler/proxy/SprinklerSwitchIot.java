@@ -18,10 +18,10 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
                     .header("Content-Type", "application/json")
                     .asString();
             String str = postResponse.getBody();
-            JSONObject res = new JSONObject(postResponse.getBody());
+            JSONObject res = new JSONObject(str);
             return res;
-        } catch (UnirestException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+//            e.printStackTrace();
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
             if (res.has("status")) {
                 return res.getString("status").equals("on");
             }
-        } catch (UnirestException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

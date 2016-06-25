@@ -32,8 +32,13 @@ public class TaskService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req){
+        if (req.houseId == null || req.status == null)
+            throw new BadRequestException();
         SprinklerSwitch sw = new SprinklerSwitchIot();
         JSONObject current = sw.getSprinklerStatus(houseId);
+        if (current == null) {
+            throw new NotFoundException();
+        }
         if (req.status.compareTo("off") == 0) {
             req.duration = 0;
             if(sw.setSprinklerStatus(houseId, false, req.duration)) {
