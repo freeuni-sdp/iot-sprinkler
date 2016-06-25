@@ -1,4 +1,4 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.proxy;
 
 import org.json.JSONObject;
 

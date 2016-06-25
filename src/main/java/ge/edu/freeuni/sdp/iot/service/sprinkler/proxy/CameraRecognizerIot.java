@@ -1,12 +1,10 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.proxy;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 /**
  * Created by misho on 6/23/16.

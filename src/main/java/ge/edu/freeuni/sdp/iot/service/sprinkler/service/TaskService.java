@@ -1,6 +1,9 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.*;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.model.RequestBody;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.model.ServiceFactory;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.model.TaskResponse;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

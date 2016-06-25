@@ -1,4 +1,4 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;

@@ -1,4 +1,4 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

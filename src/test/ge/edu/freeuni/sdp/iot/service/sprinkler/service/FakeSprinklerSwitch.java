@@ -1,6 +1,6 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.SprinklerSwitch;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.SprinklerSwitch;
 import org.json.JSONObject;
 
 /**

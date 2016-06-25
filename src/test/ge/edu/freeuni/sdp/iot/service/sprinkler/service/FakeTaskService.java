@@ -1,8 +1,8 @@
-package ge.edu.freeuni.sdp.iot.service.sprinkler.core;
+package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.CameraRecognizer;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.HumidityService;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.service.WeatherService;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.CameraRecognizer;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.HumidityService;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.WeatherService;
 
 /**
  * Created by misho on 6/22/16.
