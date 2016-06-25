@@ -7,15 +7,19 @@ import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.*;
  */
 public class ServiceFactory {
 
-    public static CameraRecognizer getCameraRecognizer() {
+    public static ServiceFactory createServiceFactory() {
+        return new ServiceFactory();
+    }
+
+    public CameraRecognizer getCameraRecognizer() {
         return new CameraRecognizerIot();
     }
 
-    public static HumidityService getHumidityService() {
+    public HumidityService getHumidityService() {
         return new HumidityServiceIot();
     }
 
-    public static WeatherService getWeatherService() {
+    public WeatherService getWeatherService() {
         return new WeatherServiceIot();
     }
 }

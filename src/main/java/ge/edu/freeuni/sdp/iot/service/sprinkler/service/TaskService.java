@@ -16,15 +16,15 @@ import org.json.JSONObject;
 public class TaskService {
 
     public CameraRecognizer getCameraRecognizer() {
-        return ServiceFactory.getCameraRecognizer();
+        return ServiceFactory.createServiceFactory().getCameraRecognizer();
     }
 
     public HumidityService getHumidityService() {
-        return ServiceFactory.getHumidityService();
+        return ServiceFactory.createServiceFactory().getHumidityService();
     }
 
     public WeatherService getWeatherService() {
-        return ServiceFactory.getWeatherService();
+        return ServiceFactory.createServiceFactory().getWeatherService();
     }
 
     @PUT
