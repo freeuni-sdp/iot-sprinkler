@@ -8,6 +8,6 @@ public interface WeatherService {
     /*
         returns true if rain is forecast, false if not.
      */
-    boolean isRainLikely();
+    boolean isRainLikely(String houseId);
 
 }

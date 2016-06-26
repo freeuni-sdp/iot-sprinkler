@@ -7,7 +7,7 @@ import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.WeatherService;
  */
 public class FakeWeatherService implements WeatherService {
     @Override
-    public boolean isRainLikely() {
+    public boolean isRainLikely(String houseId) {
         return false;
     }
 }

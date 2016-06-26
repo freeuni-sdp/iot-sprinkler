@@ -45,23 +45,27 @@ public class TaskService {
                 return new TaskResponse("off", null);
             }
             else {
-                String status = current.getString("status");
-                int left = 0;
-                if (current.has("seconds_left"))
-                    left = current.getInt("seconds_left");
-                return new TaskResponse(status, left);
+                return returnOffTaskResponse(current);
             }
         }
         if (req.duration > 60) {
             req.duration = 60;
         }
-        if(getWeatherService().isRainLikely() || getCameraRecognizer().isUnknownObjectPresent(houseId)
+        if(getWeatherService().isRainLikely(houseId) || getCameraRecognizer().isUnknownObjectPresent(houseId)
                 || getHumidityService().isSoilMoist(houseId)) {
-            return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
+            return returnOffTaskResponse(current);
         }
         if(sw.setSprinklerStatus(houseId, true, req.duration)) {
             return new TaskResponse("on", req.duration);
         }
         return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));
+    }
+
+    private TaskResponse returnOffTaskResponse(JSONObject current) {
+        String status = current.getString("status");
+        int left = 0;
+        if (current.has("seconds_left"))
+            left = current.getInt("seconds_left");
+        return new TaskResponse(status, left);
     }
 }
