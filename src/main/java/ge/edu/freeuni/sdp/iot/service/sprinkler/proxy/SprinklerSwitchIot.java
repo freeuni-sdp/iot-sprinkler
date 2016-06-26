@@ -12,16 +12,17 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
     @Override
     public JSONObject getSprinklerStatus(String houseId) {
         try {
-            String url = "http://iot-sprinkler-switch.herokuapp.com/webapi/houses/" + houseId;
+            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.get(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
+                    .routeParam("house_id", houseId)
                     .asString();
             String str = postResponse.getBody();
             JSONObject res = new JSONObject(str);
             return res;
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
@@ -42,19 +43,23 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
                 }
                 body.put("timeout", duration);
             }
+            else {
+                return false;
+            }
         }
         try {
-            String url = "http://iot-sprinkler-switch.herokuapp.com/webapi/houses/" + houseId;
+            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.put(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
+                    .routeParam("house_id", houseId)
                     .body(body)
                     .asString();
-            String str = postResponse.getBody();
             JSONObject res = new JSONObject(postResponse.getBody());
             if (res.has("status")) {
-                return res.getString("status").equals("on");
+                return res.getString("status").equals(status);
             }
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
         }

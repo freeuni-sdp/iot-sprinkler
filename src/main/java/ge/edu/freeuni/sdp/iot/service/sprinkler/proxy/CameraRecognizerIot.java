@@ -13,9 +13,10 @@ public class CameraRecognizerIot implements CameraRecognizer {
     @Override
     public boolean isUnknownObjectPresent(String houseId) {
         try {
-            String url = "http://iot-camera-object-recognizer.herokuapp.com/webapi/houses/" + houseId + "/check";
+            String url = "http://private-920c7-iotcameraobjectrecognizer.apiary-mock.com/webapi/houses/{house_id}/check";
             HttpResponse<JsonNode> postResponse = Unirest.get(url)
                     .header("accept", "application/json")
+                    .routeParam("house_id", houseId)
                     .asJson();
             JSONObject o = postResponse.getBody().getObject();
             if (o.has("result")) {
