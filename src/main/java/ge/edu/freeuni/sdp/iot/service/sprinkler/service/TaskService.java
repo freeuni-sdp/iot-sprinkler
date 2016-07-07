@@ -27,14 +27,18 @@ public class TaskService {
         return ServiceFactory.createServiceFactory().getWeatherService();
     }
 
+    public SprinklerSwitch getSprinklerSwitch() {
+        return new SprinklerSwitchIot();
+    }
+
     @PUT
     @Path("{house_id}/task")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req){
+    public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req) {
         if (req.houseId == null || req.status == null)
             throw new BadRequestException();
-        SprinklerSwitch sw = new SprinklerSwitchIot();
+        SprinklerSwitch sw = getSprinklerSwitch();
         JSONObject current = sw.getSprinklerStatus(houseId);
         if (current == null) {
             throw new NotFoundException();

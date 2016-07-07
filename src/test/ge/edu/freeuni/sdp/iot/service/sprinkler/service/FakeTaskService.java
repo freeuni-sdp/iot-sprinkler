@@ -2,6 +2,7 @@ package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
 import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.CameraRecognizer;
 import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.HumidityService;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.SprinklerSwitch;
 import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.WeatherService;
 
 /**
@@ -22,5 +23,10 @@ public class FakeTaskService extends TaskService {
     @Override
     public WeatherService getWeatherService() {
         return new FakeWeatherService();
+    }
+
+    @Override
+    public SprinklerSwitch getSprinklerSwitch() {
+        return new FakeSprinklerSwitch();
     }
 }
