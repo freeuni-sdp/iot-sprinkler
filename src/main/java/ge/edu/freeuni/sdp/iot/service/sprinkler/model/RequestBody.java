@@ -18,6 +18,6 @@ public class RequestBody {
     @JsonProperty(value = "set_status", required = true)
     public String status;
 
-    @JsonProperty(required = false, defaultValue = "0")
-    public int duration;
+    @JsonProperty(value = "duration")
+    public int duration = 60;
 }

@@ -67,6 +67,9 @@ public class TaskService {
 
     private TaskResponse returnOffTaskResponse(JSONObject current) {
         String status = current.getString("status");
+        if (status.compareTo("off") == 0) {
+            return new TaskResponse(status, null);
+        }
         int left = 0;
         if (current.has("seconds_left"))
             left = current.getInt("seconds_left");
