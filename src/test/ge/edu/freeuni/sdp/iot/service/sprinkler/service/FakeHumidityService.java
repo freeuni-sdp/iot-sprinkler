@@ -8,6 +8,9 @@ import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.HumidityService;
 public class FakeHumidityService implements HumidityService {
     @Override
     public boolean isSoilMoist(String houseId) {
+        if(houseId.compareTo("2") == 0) {
+            return true;
+        }
         return false;
     }
 }

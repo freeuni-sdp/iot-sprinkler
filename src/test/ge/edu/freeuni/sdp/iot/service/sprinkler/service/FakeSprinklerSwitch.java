@@ -10,11 +10,17 @@ public class FakeSprinklerSwitch implements SprinklerSwitch {
 
     @Override
     public JSONObject getSprinklerStatus(String houseId) {
-        return null;
+        if(houseId.compareTo("3") == 0 || houseId.compareTo("4") == 0) {
+            return new JSONObject("{ \"status\": \"off\", \"seconds_left\": 0 }");
+        }
+        return new JSONObject("{ \"status\": \"on\", \"seconds_left\": 50 }");
     }
 
     @Override
     public boolean setSprinklerStatus(String houseId, boolean newStatus, int duration) {
-        return false;
+        if(houseId.compareTo("3") == 0) {
+            return false;
+        }
+        return true;
     }
 }

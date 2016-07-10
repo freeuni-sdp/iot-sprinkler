@@ -8,6 +8,9 @@ import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.CameraRecognizer;
 public class FakeCameraRecognizer implements CameraRecognizer {
     @Override
     public boolean isUnknownObjectPresent(String houseId) {
+        if(houseId.compareTo("4") == 0) {
+            return true;
+        }
         return false;
     }
 }
