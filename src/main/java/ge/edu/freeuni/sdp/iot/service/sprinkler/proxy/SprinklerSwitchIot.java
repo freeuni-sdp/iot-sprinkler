@@ -12,7 +12,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
     @Override
     public JSONObject getSprinklerStatus(String houseId) {
         try {
-            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
+            String url = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.get(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
@@ -48,7 +48,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
             }
         }
         try {
-            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
+            String url = "https://iot-sprinkler-switch.herokuapp.com/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.put(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
@@ -57,7 +57,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
                     .asString();
             JSONObject res = new JSONObject(postResponse.getBody());
             if (res.has("status")) {
-                return res.getString("status").equals(status);
+                return res.getString("status").compareTo(status) == 0;
             }
             return false;
         } catch (Exception e) {
