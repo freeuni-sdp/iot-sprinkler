@@ -10,7 +10,7 @@ import org.json.JSONArray;
  */
 public class WeatherServiceIot implements WeatherService {
 
-    private static final String URI = "http://private-6e8eb-iotweather.apiary-mock.com/webapi/houses/{house_id}/rain";
+    private static final String URI = "https://iot-weather.herokuapp.com/webapi/houses/{house_id}/rain";
     private static final String KEY = "rain";
     private static final String POSITIVE_VAL = "yes";
 

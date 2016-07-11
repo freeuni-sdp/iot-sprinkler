@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  */
 public class HouseRegistryServiceIot implements HouseRegistryService {
     private static final String API_URL =
-            "http://private-3aa89-iothouseregistry.apiary-mock.com";
+            "https://iot-sprinkler-switch.herokuapp.com";
 
     private static final String KEY_SPRINKLER = "sprinkler_ip";
     private static final String KEY_SUB_IP = "_";

@@ -10,11 +10,13 @@ import org.json.JSONObject;
  * Created by misho on 6/23/16.
  */
 public class CameraRecognizerIot implements CameraRecognizer {
+
+    private static final String URI = "https://iot-camera-object-recognizer.herokuapp.com/webapi/houses/{house_id}/check";
+
     @Override
     public boolean isUnknownObjectPresent(String houseId) {
         try {
-            String url = "http://private-920c7-iotcameraobjectrecognizer.apiary-mock.com/webapi/houses/{house_id}/check";
-            HttpResponse<JsonNode> postResponse = Unirest.get(url)
+            HttpResponse<JsonNode> postResponse = Unirest.get(URI)
                     .header("accept", "application/json")
                     .routeParam("house_id", houseId)
                     .asJson();

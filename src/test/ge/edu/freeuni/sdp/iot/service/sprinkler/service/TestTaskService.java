@@ -73,6 +73,21 @@ public class TestTaskService extends JerseyTest {
     }
 
     /*
+        tests "off" task when switch can't change sprinkler status
+     */
+    @Test
+    public void testOffSwitch() {
+        Entity e = Entity.json("{ \"house_id\": \"3\", \"set_status\": \"off\"}");
+        Response r = target("houses/3/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        JSONObject json = new JSONObject(r.readEntity(String.class));
+        assertEquals("off", json.getString("status"));
+        assertFalse(json.has("duration"));
+        assertEquals(200, r.getStatus());
+    }
+
+    /*
         tests "on" task when there are unknown objects on the scene
      */
     @Test
@@ -99,6 +114,66 @@ public class TestTaskService extends JerseyTest {
         JSONObject json = new JSONObject(r.readEntity(String.class));
         assertEquals("on", json.getString("status"));
         assertEquals(50, json.getInt("duration"));
+        assertEquals(200, r.getStatus());
+    }
+
+    /*
+        tests normal "on" task case with duration in (0, 60]
+     */
+    @Test
+    public void testOnNormal() {
+        Entity e = Entity.json("{ \"house_id\": \"1\", \"set_status\": \"on\", \"duration\": 5}");
+        Response r = target("houses/1/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        JSONObject json = new JSONObject(r.readEntity(String.class));
+        assertEquals("on", json.getString("status"));
+        assertEquals(5, json.getInt("duration"));
+        assertEquals(200, r.getStatus());
+    }
+
+    /*
+        test normal "off" task case
+     */
+    @Test
+    public void testOffNormal() {
+        Entity e = Entity.json("{ \"house_id\": \"1\", \"set_status\": \"off\" }");
+        Response r = target("houses/1/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        JSONObject json = new JSONObject(r.readEntity(String.class));
+        assertEquals("off", json.getString("status"));
+        assertFalse(json.has("duration"));
+        assertEquals(200, r.getStatus());
+    }
+
+    /*
+        tests "on" task case when given duration is larger than 60
+     */
+    @Test
+    public void testOnLongDuration() {
+        Entity e = Entity.json("{ \"house_id\": \"1\", \"set_status\": \"on\", \"duration\": 65}");
+        Response r = target("houses/1/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        JSONObject json = new JSONObject(r.readEntity(String.class));
+        assertEquals("on", json.getString("status"));
+        assertEquals(60, json.getInt("duration"));
+        assertEquals(200, r.getStatus());
+    }
+
+    /*
+        tests "on" task case when given duration is negative
+     */
+    @Test
+    public void testOnNegativeDuration() {
+        Entity e = Entity.json("{ \"house_id\": \"1\", \"set_status\": \"on\", \"duration\": -1}");
+        Response r = target("houses/1/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        JSONObject json = new JSONObject(r.readEntity(String.class));
+        assertEquals("on", json.getString("status"));
+        assertEquals(60, json.getInt("duration"));
         assertEquals(200, r.getStatus());
     }
 

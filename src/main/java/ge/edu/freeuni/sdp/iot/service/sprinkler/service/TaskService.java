@@ -59,7 +59,7 @@ public class TaskService {
                 return returnOffTaskResponse(current);
             }
         }
-        if (req.duration > 60) {
+        if (req.duration > 60 || req.duration < 0) {
             req.duration = 60;
         }
         if(getWeatherService().isRainLikely(houseId) || getCameraRecognizer().isUnknownObjectPresent(houseId)

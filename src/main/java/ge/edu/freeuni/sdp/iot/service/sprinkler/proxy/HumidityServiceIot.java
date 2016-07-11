@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import sun.security.x509.AVA;
 
 public class HumidityServiceIot implements HumidityService {
-    private static final String URI = "https://private-17a5da-sdp2.apiary-mock.com/house/{house_id}";
+    private static final String URI = "https://iot-soil-moisture-sensor.herokuapp.com/house/{house_id}";
     private static final String AVAILABLE = "available";
     private static final String VALUE = "sensorValue";
 
