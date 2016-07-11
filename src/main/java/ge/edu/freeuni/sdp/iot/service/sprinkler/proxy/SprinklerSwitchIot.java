@@ -57,7 +57,13 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
                     .asString();
             JSONObject res = new JSONObject(postResponse.getBody());
             if (res.has("status")) {
-                return res.getString("status").compareTo(status) == 0;
+                if (res.getString("status").compareTo(status) != 0) {
+                    return false;
+                }
+                else if (res.has("seconds_left")) {
+                    return res.getInt("seconds_left") == duration;
+                }
+                return true;
             }
             return false;
         } catch (Exception e) {
