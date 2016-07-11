@@ -31,21 +31,28 @@ public class TaskService {
         return new SprinklerSwitchIot();
     }
 
+    public HouseRegistryService getHouseRegistry() {
+        return new HouseRegistryServiceIot();
+    }
+
     @PUT
     @Path("{house_id}/task")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public TaskResponse newTask(@PathParam("house_id") String houseId, RequestBody req) {
-        if (req.houseId == null || req.status == null)
+        HouseRegistryService registry = getHouseRegistry();
+        String url = registry.getSprinklerIp(houseId);
+        if (req.houseId == null || req.status == null) {
             throw new BadRequestException();
-        SprinklerSwitch sw = getSprinklerSwitch();
-        JSONObject current = sw.getSprinklerStatus(houseId);
-        if (current == null) {
+        }
+        SprinklerSwitch sw = getSprinklerSwitch(); //https://private-8320b-sprinklerswitch.apiary-mock.com
+        JSONObject current = sw.getSprinklerStatus(url, houseId);
+        if (current == null || !registry.houseExists(houseId) || url == null) {
             throw new NotFoundException();
         }
         if (req.status.compareTo("off") == 0) {
             req.duration = 0;
-            if(sw.setSprinklerStatus(houseId, false, req.duration)) {
+            if(sw.setSprinklerStatus(url, houseId, false, req.duration)) {
                 return new TaskResponse("off", null);
             }
             else {
@@ -59,7 +66,7 @@ public class TaskService {
                 || getHumidityService().isSoilMoist(houseId)) {
             return returnOffTaskResponse(current);
         }
-        if(sw.setSprinklerStatus(houseId, true, req.duration)) {
+        if(sw.setSprinklerStatus(url, houseId, true, req.duration)) {
             return new TaskResponse("on", req.duration);
         }
         return new TaskResponse(current.getString("status"), current.getInt("seconds_left"));

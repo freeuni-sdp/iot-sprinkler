@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class FakeSprinklerSwitch implements SprinklerSwitch {
 
     @Override
-    public JSONObject getSprinklerStatus(String houseId) {
+    public JSONObject getSprinklerStatus(String url, String houseId) {
         if(houseId.compareTo("3") == 0 || houseId.compareTo("4") == 0) {
             return new JSONObject("{ \"status\": \"off\", \"seconds_left\": 0 }");
         }
@@ -17,7 +17,7 @@ public class FakeSprinklerSwitch implements SprinklerSwitch {
     }
 
     @Override
-    public boolean setSprinklerStatus(String houseId, boolean newStatus, int duration) {
+    public boolean setSprinklerStatus(String url, String houseId, boolean newStatus, int duration) {
         if(houseId.compareTo("3") == 0) {
             return false;
         }

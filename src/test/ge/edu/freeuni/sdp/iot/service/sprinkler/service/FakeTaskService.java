@@ -1,9 +1,6 @@
 package ge.edu.freeuni.sdp.iot.service.sprinkler.service;
 
-import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.CameraRecognizer;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.HumidityService;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.SprinklerSwitch;
-import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.WeatherService;
+import ge.edu.freeuni.sdp.iot.service.sprinkler.proxy.*;
 
 /**
  * Created by misho on 6/22/16.
@@ -28,5 +25,10 @@ public class FakeTaskService extends TaskService {
     @Override
     public SprinklerSwitch getSprinklerSwitch() {
         return new FakeSprinklerSwitch();
+    }
+
+    @Override
+    public HouseRegistryService getHouseRegistry() {
+        return new FakeHouseRegistryService();
     }
 }

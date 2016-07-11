@@ -101,4 +101,28 @@ public class TestTaskService extends JerseyTest {
         assertEquals(50, json.getInt("duration"));
         assertEquals(200, r.getStatus());
     }
+
+    /*
+        Tests house not exists response
+     */
+    @Test
+    public void houseNotExists(){
+        Entity e = Entity.json("{ \"house_id\": \"12\", \"set_status\": \"on\"}");
+        Response r = target("houses/12/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), r.getStatus());
+    }
+
+    /*
+        Tests bad request body response
+     */
+    @Test
+    public void badRequest(){
+        Entity e = Entity.json("{ \"house_id\": \"12\"}");
+        Response r = target("houses/12/task")
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(e);
+        assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), r.getStatus());
+    }
 }

@@ -7,7 +7,7 @@ import org.json.JSONObject;
  */
 public interface SprinklerSwitch {
 
-    JSONObject getSprinklerStatus(String houseId);
+    JSONObject getSprinklerStatus(String url, String houseId);
 
     /*
         tries to change sprinkler status to the given one.
@@ -16,6 +16,6 @@ public interface SprinklerSwitch {
         newStatus - new status of the sprinkler (true/false = on/off)
         duration - number of seconds for which sprinkler should be on (not used if the new status is "off")
      */
-    boolean setSprinklerStatus(String houseId, boolean newStatus, int duration);
+    boolean setSprinklerStatus(String url, String houseId, boolean newStatus, int duration);
 
 }

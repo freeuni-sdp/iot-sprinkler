@@ -10,9 +10,9 @@ import org.json.JSONObject;
 public class SprinklerSwitchIot implements SprinklerSwitch {
 
     @Override
-    public JSONObject getSprinklerStatus(String houseId) {
+    public JSONObject getSprinklerStatus(String url, String houseId) {
         try {
-            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
+            url = url + "/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.get(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
@@ -28,7 +28,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
     }
 
     @Override
-    public boolean setSprinklerStatus(String houseId, boolean newStatus, int duration) {
+    public boolean setSprinklerStatus(String url, String houseId, boolean newStatus, int duration) {
         JSONObject body = new JSONObject();
         String status = "on";
         if (!newStatus) {
@@ -48,7 +48,7 @@ public class SprinklerSwitchIot implements SprinklerSwitch {
             }
         }
         try {
-            String url = "https://private-8320b-sprinklerswitch.apiary-mock.com/webapi/houses/{house_id}";
+            url = url + "/webapi/houses/{house_id}";
             HttpResponse<String> postResponse = Unirest.put(url)
                     .header("accept", "application/json")
                     .header("Content-Type", "application/json")
