@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import sun.security.x509.AVA;
 
 public class HumidityServiceIot implements HumidityService {
-    private static final String URI = "https://iot-soil-moisture-sensor.herokuapp.com/house/{house_id}";
+    private static final String URI = "https://iot-soil-moisture-sensor.herokuapp.com/house/{houseid}";
     private static final String AVAILABLE = "available";
     private static final String VALUE = "sensorValue";
 
@@ -18,7 +18,7 @@ public class HumidityServiceIot implements HumidityService {
         try {
 
             JSONObject obj = Unirest.get(URI)
-                    .routeParam("house_id", houseId)
+                    .routeParam("houseid", houseId)
                     .asJson()
                     .getBody()
                     .getObject();
